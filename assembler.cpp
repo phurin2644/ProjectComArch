@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     if (!strcmp(opcode, "add"))
     {
         /* do whatever you need to do for opcode "add" */
+        int opc = 000 ;
     }
 
     return (0);
