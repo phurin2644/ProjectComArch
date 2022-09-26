@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     {
         /* do whatever you need to do for opcode "add" */
         int opc = 000 ;
-    }else if (!strcmp(opcode, "add"))
+    }else if (!strcmp(opcode, "beq"))
     {
         /* do whatever you need to do for opcode "add" */
         int opc = 000 ;
