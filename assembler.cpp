@@ -63,15 +63,15 @@ int main(int argc, char *argv[])
     }else if (!strcmp(opcode, "lw"))
     {
         /* do whatever you need to do for opcode "add" */
-        int opc = 000 ;
+        int opc = 010 ;
     }else if (!strcmp(opcode, "sw"))
     {
         /* do whatever you need to do for opcode "add" */
-        int opc = 000 ;
+        int opc = 011 ;
     }else if (!strcmp(opcode, "beq"))
     {
         /* do whatever you need to do for opcode "add" */
-        int opc = 000 ;
+        int opc = 100 ;
     }
 
     return (0);
