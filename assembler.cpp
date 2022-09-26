@@ -56,6 +56,22 @@ int main(int argc, char *argv[])
     {
         /* do whatever you need to do for opcode "add" */
         int opc = 000 ;
+    }else if (!strcmp(opcode, "nand"))
+    {
+        /* do whatever you need to do for opcode "nand" */
+        int opc = 001 ;
+    }else if (!strcmp(opcode, "lw"))
+    {
+        /* do whatever you need to do for opcode "add" */
+        int opc = 000 ;
+    }else if (!strcmp(opcode, "sw"))
+    {
+        /* do whatever you need to do for opcode "add" */
+        int opc = 000 ;
+    }else if (!strcmp(opcode, "add"))
+    {
+        /* do whatever you need to do for opcode "add" */
+        int opc = 000 ;
     }
 
     return (0);
