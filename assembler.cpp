@@ -8,6 +8,7 @@
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
+char DemicalToBin(chat * );
 
 int main(int argc, char *argv[])
 {
@@ -134,4 +135,8 @@ int isNumber(char *string)
     /* return 1 if string is a number */
     int i;
     return ((sscanf(string, "%d", &i)) == 1);
+}
+
+char DemicalToBin(chat *demi){
+	
 }
