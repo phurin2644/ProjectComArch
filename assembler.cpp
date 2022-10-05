@@ -8,7 +8,7 @@
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
-char DemicalToBin(chat * );
+int DemicalToBin(char * );
 
 int main(int argc, char *argv[])
 {
@@ -137,6 +137,14 @@ int isNumber(char *string)
     return ((sscanf(string, "%d", &i)) == 1);
 }
 
-char DemicalToBin(chat *demi){
-	
+int DemicalToBin(char *demi){
+	int decimal = (int)demi ;
+	int binary = 0, remainder, product = 1;
+	while (decimal != 0) {
+    remainder = decimal % 2;
+    binary = binary + (remainder * product);
+    decimal = decimal / 2;
+    product *= 10;
+  }
+	return binary ;
 }
