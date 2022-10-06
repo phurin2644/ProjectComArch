@@ -8,6 +8,7 @@
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
+int DecimalToBin(char  );
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     FILE *inFilePtr, *outFilePtr;
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
+    
+    printf("Binary num is %d ",DecimalToBin(7));
 
     if (argc != 3)
     {
@@ -134,4 +137,18 @@ int isNumber(char *string)
     /* return 1 if string is a number */
     int i;
     return ((sscanf(string, "%d", &i)) == 1);
+}
+
+int DecimalToBin(char demi){
+	printf("Demical num is %d \n", demi);
+	int decimal = int(demi);
+	printf("Demical num is %d \n", decimal);
+	int binary = 0, remainder, product = 1;
+	while (decimal != 0) {
+    remainder = decimal % 2;
+    binary = binary + (remainder * product);
+    decimal = decimal / 2;
+    product *= 10;
+  }
+	return binary ;
 }
