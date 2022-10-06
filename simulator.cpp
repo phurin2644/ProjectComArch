@@ -21,7 +21,7 @@ typedef struct stateStruct
 
 void printState(stateType *);
 void binaryToDecimal(int);
-void decimalToBinary(int);
+int* decimalToBinary(int);
 
 int main(int argc, char *argv[])
 {
@@ -56,16 +56,40 @@ int main(int argc, char *argv[])
         printf("memory[%d]=%d\n", state.numMemory, state.mem[state.numMemory]);
     }
 
-    // yang mai sed
-    for(int i = 0;i<state.numMemory;i++){
+    // // yang mai sed
+    // for(int i = 0;i<state.numMemory;i++){
 
-        // if(state.mem[state.numMemory]==0){
-        //     continue;
-        // }
+    //     // if(state.mem[state.numMemory]==0){
+    //     //     continue;
+    //     // }
 
-        decimalToBinary(state.mem[i]);
+    //     decimalToBinary(state.mem[i]);
 
+    // }
+
+    //initialize register to 0
+    for(int i = 0 ;i<NUMREGS;i++){
+        state.reg[i] = 0;
     }
+
+    bool halt = false;
+    int pc = 0;
+    printState(&state);
+    while(halt == false){
+        
+        //pre-simulation
+        int *curr_inst = new int[11];
+        curr_inst = decimalToBinary(state.mem[pc]);
+        int opcode = curr_inst[23]*100 + curr_inst[22]*10 + curr_inst[21];
+        cout << opcode;
+
+        //read and simulate instruction (in-progress)
+
+        //post-simulation 
+        halt = true;
+        pc++;
+    }
+    printState(&state);
 
     return (0);
 }
@@ -105,8 +129,14 @@ void binaryToDecimal(int n) {
 }
 
 // convert decimal to binary function
-void decimalToBinary(int n){
-	int arr[11], i = 0, num = n;
+int* decimalToBinary(int n){
+	int *arr = new int[11];
+    int i = 0, num = n;
+
+    //initial all element to zero.
+    for(int j = 0;j<32;j++){
+        arr[i] = 0;
+    }
     
     // Until the value of n becomes 0.
 	while(n != 0){
@@ -121,5 +151,5 @@ void decimalToBinary(int n){
 		cout << arr[i];
 	}
 	cout << endl;
+    return arr;
 }
-
