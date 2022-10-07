@@ -20,7 +20,7 @@ typedef struct stateStruct
 } stateType;
 
 void printState(stateType *);
-void binaryToDecimal(int);
+int binaryToDecimal(int);
 int* decimalToBinary(int);
 
 int main(int argc, char *argv[])
@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
     }
 
     bool halt = false;
-    int pc = 0;
 
     //simulation
     printState(&state);
@@ -81,16 +80,26 @@ int main(int argc, char *argv[])
         
         //pre-simulation
         int *curr_inst = new int[11];
-        curr_inst = decimalToBinary(state.mem[pc]);
-        int opcode = curr_inst[23]*100 + curr_inst[22]*10 + curr_inst[21];
-        cout << opcode;
+        curr_inst = decimalToBinary(state.mem[state.pc]);
+        int opcode = curr_inst[24]*100 + curr_inst[23]*10 + curr_inst[22];
+
+        int regA = binaryToDecimal(curr_inst[19]+curr_inst[20]*10+curr_inst[21]*100);   //bit 21-19
+        int regB = binaryToDecimal(curr_inst[16]+curr_inst[17]*10+curr_inst[18]*100);   //bit 18-16
+
+        state.reg[regA] = 2;
+        state.reg[regB] = 3;
 
         //read and simulate instruction (in-progress)
         if(opcode == 000){          //add instruction
 
+            int dest = binaryToDecimal(curr_inst[0]+curr_inst[1]*10+curr_inst[2]*100);  //bit 2-0
+            state.reg[dest] = state.reg[regA]+state.reg[regB];
+
         }
         else if(opcode == 001){     //nand instruction
-
+            printf("nand operation\n");
+            int dest = binaryToDecimal(curr_inst[0]+curr_inst[1]*10+curr_inst[2]*100);  //bit 2-0
+            state.reg[dest] = ~(state.reg[regA] & state.reg[regB]);
         }
         else if(opcode == 010){     //lw instruction
 
@@ -113,7 +122,7 @@ int main(int argc, char *argv[])
 
         //post-simulation 
         halt = true;
-        pc++;
+        state.pc++;
     }
     printState(&state);
 
@@ -141,7 +150,7 @@ void printState(stateType *statePtr)
 }
 
 // convert binary to decimal function
-void binaryToDecimal(int n) {
+int binaryToDecimal(int n) {
    int decimalNumber = 0;
    int base = 1;
    int temp = n;
@@ -152,6 +161,7 @@ void binaryToDecimal(int n) {
       base = base*2;
    }
    cout<<"Decimal form of "<<n<<" is "<<decimalNumber<<endl;;
+   return decimalNumber;
 }
 
 // convert decimal to binary function
