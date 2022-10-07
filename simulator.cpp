@@ -74,6 +74,8 @@ int main(int argc, char *argv[])
 
     bool halt = false;
     int pc = 0;
+
+    //simulation
     printState(&state);
     while(halt == false){
         
@@ -84,6 +86,30 @@ int main(int argc, char *argv[])
         cout << opcode;
 
         //read and simulate instruction (in-progress)
+        if(opcode == 000){          //add instruction
+
+        }
+        else if(opcode == 001){     //nand instruction
+
+        }
+        else if(opcode == 010){     //lw instruction
+
+        }
+        else if(opcode == 011){     //sw instruction
+
+        }
+        else if(opcode == 100){     //beq instruction
+
+        }
+        else if(opcode == 101){     //jalr instruction
+
+        }
+        else if(opcode == 110){     //halt instruction
+
+        }
+        else if(opcode == 111){     //noop
+
+        }
 
         //post-simulation 
         halt = true;
@@ -135,7 +161,7 @@ int* decimalToBinary(int n){
 
     //initial all element to zero.
     for(int j = 0;j<32;j++){
-        arr[i] = 0;
+        arr[j] = 0;
     }
     
     // Until the value of n becomes 0.
@@ -147,8 +173,8 @@ int* decimalToBinary(int n){
 	cout << num << " in Binary is ";
 
 	// Printing the array in Reversed Order.
-	for(i = i - 1; i >= 0;i--){
-		cout << arr[i];
+	for(int j = i ; j >= 0;j--){
+		cout << arr[j];
 	}
 	cout << endl;
     return arr;
