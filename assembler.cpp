@@ -14,6 +14,9 @@ int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
 char const * DecimalToBin(char *);
 string Rtype(string,string,string,string);
+string Itype(string,string,string,string);
+string Jtype(string,string,string);
+string Otype(string);
 
 int main(int argc, char *argv[])
 {
@@ -21,9 +24,10 @@ int main(int argc, char *argv[])
     FILE *inFilePtr, *outFilePtr;
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
+    string s ;
     
     printf("binnum: %s\n",DecimalToBin("20"));
-    string s = Rtype("000","010","110","100");
+    string s = Otype("010");
     printf("code: %s/n",s.c_str());
     if (argc != 3)
     {
@@ -64,7 +68,7 @@ int main(int argc, char *argv[])
     if (!strcmp(opcode, "add"))
     {
         /* do whatever you need to do for opcode "add" */
-        int opc = 000 ;
+        s = Rtype("000");
     }else if (!strcmp(opcode, "nand"))
     {
         /* do whatever you need to do for opcode "nand" */
