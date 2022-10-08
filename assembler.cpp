@@ -1,5 +1,6 @@
 /* Assembler code fragment */
 
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -154,7 +155,7 @@ int DecimalToBin(char demi){
 	return binary ;
 }
 int BinToHex(){
-    
+
 }
 int Rtype(list<int> field,int opcode,int regA,int regB,int destReg){
     feild.push_back
