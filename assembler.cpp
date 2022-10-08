@@ -1,15 +1,15 @@
 /* Assembler code fragment */
 
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <string>
 
 #define MAXLINELENGTH 1000
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
-int DecimalToBin(char  );
+char DecimalToBin(char  );
 
 int main(int argc, char *argv[])
 {
@@ -18,8 +18,6 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     
-    string a ="love";
-    printf(a);
 
     if (argc != 3)
     {
@@ -141,7 +139,7 @@ int isNumber(char *string)
     return ((sscanf(string, "%d", &i)) == 1);
 }
 
-int DecimalToBin(char demi){
+char DecimalToBin(char demi){
 	printf("Demical num is %d \n", demi);
 	int decimal = int(demi);
 	printf("Demical num is %d \n", decimal);
@@ -152,13 +150,13 @@ int DecimalToBin(char demi){
     decimal = decimal / 2;
     product *= 10;
   }
-	return binary ;
+	return static_cast<char>(binary) ;
 }
 int BinToHex(){
 
 }
-int Rtype(list<int> field,int opcode,int regA,int regB,int destReg){
-    feild.push_back
+int Rtype(char opcode,char regA,char regB,char destReg){
+    string fields = opcode+regA+regB+"0000000000000"+destReg ;
     return 1 ;
 }
 int Itype(int opcode,int regA,int regB,int offsetField){
