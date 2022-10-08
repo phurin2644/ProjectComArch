@@ -174,7 +174,7 @@ string Itype(string opcode,string regA,string regB,string offsetField){
     return fields ;
 }
 string Jtype(string opcode,string regA,string regB){
-    string fields = opcode+regA+regB+"0000000000000"+destReg ;
+    string fields = opcode+regA+regB+"0000000000000000" ;
     return fields ;
 }
 string Otype(string opcode){
