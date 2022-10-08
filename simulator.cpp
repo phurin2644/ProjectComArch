@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include<iostream>    
-#include<array> 
+#include <iostream>
+#include <array>
 using namespace std;
 
 #define NUMMEMORY 65536 /* maximum number of words in memory */
@@ -21,7 +21,7 @@ typedef struct stateStruct
 
 void printState(stateType *);
 int binaryToDecimal(int);
-int* decimalToBinary(int);
+int *decimalToBinary(int);
 
 int main(int argc, char *argv[])
 {
@@ -67,69 +67,73 @@ int main(int argc, char *argv[])
 
     // }
 
-    //initialize register to 0
-    for(int i = 0 ;i<NUMREGS;i++){
+    // initialize register to 0
+    for (int i = 0; i < NUMREGS; i++)
+    {
         state.reg[i] = 0;
     }
 
     bool halt = false;
 
-    //simulation
+    // simulation
     printState(&state);
-    while(halt == false){
-        
-        //pre-simulation
+    while (halt == false)
+    {
+
+        // pre-simulation
         int *curr_inst = new int[11];
         curr_inst = decimalToBinary(state.mem[state.pc]);
-        int opcode = curr_inst[24]*100 + curr_inst[23]*10 + curr_inst[22];
+        int opcode = curr_inst[24] * 100 + curr_inst[23] * 10 + curr_inst[22];
 
-        int regA = binaryToDecimal(curr_inst[19]+curr_inst[20]*10+curr_inst[21]*100);   //bit 21-19
-        int regB = binaryToDecimal(curr_inst[16]+curr_inst[17]*10+curr_inst[18]*100);   //bit 18-16
+        int regA = binaryToDecimal(curr_inst[19] + curr_inst[20] * 10 + curr_inst[21] * 100); // bit 21-19
+        int regB = binaryToDecimal(curr_inst[16] + curr_inst[17] * 10 + curr_inst[18] * 100); // bit 18-16
+        int offset = convertNum(state.mem[state.pc] & (1 << 15) - 1);
 
         state.reg[regA] = 2;
         state.reg[regB] = 3;
 
-        //read and simulate instruction (in-progress)
-        if(opcode == 000){          //add instruction
+        // read and simulate instruction (in-progress)
+        if (opcode == 000)
+        { // add instruction
 
-            int dest = binaryToDecimal(curr_inst[0]+curr_inst[1]*10+curr_inst[2]*100);  //bit 2-0
-            state.reg[dest] = state.reg[regA]+state.reg[regB];
-
+            int dest = binaryToDecimal(curr_inst[0] + curr_inst[1] * 10 + curr_inst[2] * 100); // bit 2-0
+            state.reg[dest] = state.reg[regA] + state.reg[regB];
         }
-        else if(opcode == 001){     //nand instruction
-            printf("nand operation\n");
-            int dest = binaryToDecimal(curr_inst[0]+curr_inst[1]*10+curr_inst[2]*100);  //bit 2-0
+        else if (opcode == 001)
+        { // nand instruction
+
+            int dest = binaryToDecimal(curr_inst[0] + curr_inst[1] * 10 + curr_inst[2] * 100); // bit 2-0
             state.reg[dest] = ~(state.reg[regA] & state.reg[regB]);
         }
-        else if(opcode == 010){     //lw instruction
-
+        else if (opcode == 010)
+        { // lw instruction
+            
+            state.reg[regB] = state.mem[offset + regA];
         }
-        else if(opcode == 011){     //sw instruction
+        else if (opcode == 011)
+        { // sw instruction
 
+            state.mem[offset + regA] = state.reg[regB]; 
         }
-        else if(opcode == 100){     //beq instruction
-
+        else if (opcode == 100)
+        { // beq instruction
         }
-        else if(opcode == 101){     //jalr instruction
-
+        else if (opcode == 101)
+        { // jalr instruction
         }
-        else if(opcode == 110){     //halt instruction
-
-        }
-        else if(opcode == 111){     //noop
-
+        else if (opcode == 110)
+        { // halt instruction
+            halt = true;
         }
 
-        //post-simulation 
-        halt = true;
-        state.pc++;
+        // post-simulation
+        if (opcode != 111) // do nothing if is noop instruction
+            state.pc++;
     }
     printState(&state);
 
     return (0);
 }
-
-
 
 void printState(stateType *statePtr)
 {
@@ -150,42 +154,61 @@ void printState(stateType *statePtr)
 }
 
 // convert binary to decimal function
-int binaryToDecimal(int n) {
-   int decimalNumber = 0;
-   int base = 1;
-   int temp = n;
-   while (temp) {
-      int lastDigit = temp % 10;
-      temp = temp/10;
-      decimalNumber += lastDigit*base;
-      base = base*2;
-   }
-   cout<<"Decimal form of "<<n<<" is "<<decimalNumber<<endl;;
-   return decimalNumber;
+int binaryToDecimal(int n)
+{
+    int decimalNumber = 0;
+    int base = 1;
+    int temp = n;
+    while (temp)
+    {
+        int lastDigit = temp % 10;
+        temp = temp / 10;
+        decimalNumber += lastDigit * base;
+        base = base * 2;
+    }
+    cout << "Decimal form of " << n << " is " << decimalNumber << endl;
+    ;
+    return decimalNumber;
 }
 
 // convert decimal to binary function
-int* decimalToBinary(int n){
-	int *arr = new int[11];
+int *decimalToBinary(int n)
+{
+    int *arr = new int[11];
     int i = 0, num = n;
 
-    //initial all element to zero.
-    for(int j = 0;j<32;j++){
+    // initial all element to zero.
+    for (int j = 0; j < 32; j++)
+    {
         arr[j] = 0;
     }
-    
-    // Until the value of n becomes 0.
-	while(n != 0){
-		arr[i] = n % 2;
-		i++;
-		n = n / 2;
-	}
-	cout << num << " in Binary is ";
 
-	// Printing the array in Reversed Order.
-	for(int j = i ; j >= 0;j--){
-		cout << arr[j];
-	}
-	cout << endl;
+    // Until the value of n becomes 0.
+    while (n != 0)
+    {
+        arr[i] = n % 2;
+        i++;
+        n = n / 2;
+    }
+    cout << num << " in Binary is ";
+
+    // Printing the array in Reversed Order.
+    for (int j = i; j >= 0; j--)
+    {
+        cout << arr[j];
+    }
+    cout << endl;
     return arr;
+}
+
+int convertNum(int num)
+{
+
+    /* convert a 16-bit number into a 32-bit integer */
+    if (num & (1 << 15))
+    {
+        num -= (1 << 16);
+    }
+
+    return (num);
 }
