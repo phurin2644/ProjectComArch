@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 
 #define MAXLINELENGTH 1000
 
@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     
-    printf("Binary num is %d ",DecimalToBin(7));
+    string a ="love";
+    printf(a);
 
     if (argc != 3)
     {
@@ -151,4 +152,20 @@ int DecimalToBin(char demi){
     product *= 10;
   }
 	return binary ;
+}
+int Rtype(int opcode,int regA,int regB,int destReg){
+    
+    return 1 ;
+}
+int Itype(int opcode,int regA,int regB,int destReg){
+    
+    return 1 ;
+}
+int Jtype(int opcode,int regA,int regB,int destReg){
+    
+    return 1 ;
+}
+int Otype(int opcode,int regA,int regB,int destReg){
+    
+    return 1 ;
 }
