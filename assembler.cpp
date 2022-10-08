@@ -178,6 +178,6 @@ string Jtype(string opcode,string regA,string regB){
     return fields ;
 }
 string Otype(string opcode){
-    string fields = opcode+regA+regB+"0000000000000"+destReg ;
+    string fields = opcode+"0000000000000000000000" ;
     return fields ;
 }
