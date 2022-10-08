@@ -4,12 +4,16 @@
 #include <cstdlib>
 #include <cstdio>
 #include <string>
+#include <cstring>
+#include <sstream>
+using namespace std;
 
 #define MAXLINELENGTH 1000
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
-char DecimalToBin(char  );
+char const * DecimalToBin(char *);
+string Rtype(string,string,string,string);
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +22,9 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     
-
+    printf("binnum: %s\n",DecimalToBin("20"));
+    string s = Rtype("000","010","110","100");
+    printf("code: %s/n",s.c_str());
     if (argc != 3)
     {
         printf("error: usage: %s <assembly-code-file> <machine-code-file>\n",
@@ -139,9 +145,9 @@ int isNumber(char *string)
     return ((sscanf(string, "%d", &i)) == 1);
 }
 
-char DecimalToBin(char demi){
+char const * DecimalToBin(char *demi){
 	printf("Demical num is %d \n", demi);
-	int decimal = int(demi);
+	int decimal = atoi(demi);
 	printf("Demical num is %d \n", decimal);
 	int binary = 0, remainder, product = 1;
 	while (decimal != 0) {
@@ -150,24 +156,28 @@ char DecimalToBin(char demi){
     decimal = decimal / 2;
     product *= 10;
   }
-	return static_cast<char>(binary) ;
+  std::stringstream tmp;
+    tmp << binary;
+
+    char const *num_char = tmp.str().c_str();
+	return num_char ;
 }
 int BinToHex(){
 
 }
-int Rtype(char opcode,char regA,char regB,char destReg){
+string Rtype(string opcode,string regA,string regB,string destReg){
     string fields = opcode+regA+regB+"0000000000000"+destReg ;
-    return 1 ;
+    return fields ;
 }
-int Itype(int opcode,int regA,int regB,int offsetField){
+string Itype(string opcode,string regA,string regB,string offsetField){
     
     return 1 ;
 }
-int Jtype(int opcode,int regA,int regB){
+string Jtype(string opcode,string regA,string regB){
     
     return 1 ;
 }
-int Otype(int opcode){
+string Otype(string opcode){
     
     return 1 ;
 }
