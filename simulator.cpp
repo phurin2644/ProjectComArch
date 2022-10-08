@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
         if (opcode != 111) // do nothing if is noop instruction
             state.pc++;
 
-        state.reg[0] = 0
+        state.reg[0] = 0;
     }
     printState(&state);
 
