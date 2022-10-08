@@ -170,14 +170,14 @@ string Rtype(string opcode,string regA,string regB,string destReg){
     return fields ;
 }
 string Itype(string opcode,string regA,string regB,string offsetField){
-    
-    return 1 ;
+    string fields = opcode+regA+regB+offsetField ;
+    return fields ;
 }
 string Jtype(string opcode,string regA,string regB){
-    
-    return 1 ;
+    string fields = opcode+regA+regB+"0000000000000"+destReg ;
+    return fields ;
 }
 string Otype(string opcode){
-    
-    return 1 ;
+    string fields = opcode+regA+regB+"0000000000000"+destReg ;
+    return fields ;
 }
