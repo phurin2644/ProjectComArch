@@ -153,8 +153,11 @@ int DecimalToBin(char demi){
   }
 	return binary ;
 }
-int Rtype(int opcode,int regA,int regB,int destReg){
+int BinToHex(){
     
+}
+int Rtype(list<int> field,int opcode,int regA,int regB,int destReg){
+    feild.push_back
     return 1 ;
 }
 int Itype(int opcode,int regA,int regB,int offsetField){
