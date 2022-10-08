@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
     bool halt = false;
 
     // simulation
-    printState(&state);
     while (halt == false)
     {
+        printState(&state);
 
         // pre-simulation
         int *curr_inst = new int[11];
@@ -88,9 +88,6 @@ int main(int argc, char *argv[])
         int regA = binaryToDecimal(curr_inst[19] + curr_inst[20] * 10 + curr_inst[21] * 100); // bit 21-19
         int regB = binaryToDecimal(curr_inst[16] + curr_inst[17] * 10 + curr_inst[18] * 100); // bit 18-16
         int offset = convertNum(state.mem[state.pc] & (1 << 15) - 1);
-
-        state.reg[regA] = 2;
-        state.reg[regB] = 3;
 
         // read and simulate instruction (in-progress)
         if (opcode == 000)
@@ -117,9 +114,14 @@ int main(int argc, char *argv[])
         }
         else if (opcode == 100)
         { // beq instruction
+            if(state.reg[regA] = state.reg[regB]){
+                state.pc = state.pc + offset;
+            }
         }
         else if (opcode == 101)
         { // jalr instruction
+            state.reg[regB]=state.pc+1;
+            state.pc=state.reg[regA]-1;
         }
         else if (opcode == 110)
         { // halt instruction
