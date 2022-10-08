@@ -131,6 +131,8 @@ int main(int argc, char *argv[])
         // post-simulation
         if (opcode != 111) // do nothing if is noop instruction
             state.pc++;
+
+        state.reg[0] = 0
     }
     printState(&state);
 
