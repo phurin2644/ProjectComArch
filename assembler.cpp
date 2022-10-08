@@ -157,15 +157,15 @@ int Rtype(int opcode,int regA,int regB,int destReg){
     
     return 1 ;
 }
-int Itype(int opcode,int regA,int regB,int destReg){
+int Itype(int opcode,int regA,int regB,int offsetField){
     
     return 1 ;
 }
-int Jtype(int opcode,int regA,int regB,int destReg){
+int Jtype(int opcode,int regA,int regB){
     
     return 1 ;
 }
-int Otype(int opcode,int regA,int regB,int destReg){
+int Otype(int opcode){
     
     return 1 ;
 }
