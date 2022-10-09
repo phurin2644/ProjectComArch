@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
     
     printf("binnum: %s\n",DecimalToBin("20"));
     char *opc = "010";
-    char *ra = "5";
-    char *rb = "5";
-    char *dr = "5";
+    char ra[] = "5";
+    char rb[] = "5";
+    char dr[] = "5";
     s = Rtype(opc,ra,rb,dr);
     printf("code: %s\n",s.c_str());
     s = Itype(opc,ra,rb,dr);
