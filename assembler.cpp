@@ -179,7 +179,7 @@ string Rtype(char *opc,char *rA,char *rB,char *dR){
 	std::string regA(rA);
 	std::string regB(rB);
 	std::string destReg(dR);
-    string fields = opcode+regA+regB+"0000000000000"+destReg ;
+    string fields = "0000000"+opcode+regA+regB+"0000000000000"+destReg ;
     return fields ;
 }
 string Itype(char *opc,char *rA,char *rB,char *offsField){
@@ -191,14 +191,14 @@ string Itype(char *opc,char *rA,char *rB,char *offsField){
 	while(offsetField.length()<16){
 		offsetField = "0"+offsetField ;
 	}
-    string fields = opcode+regA+regB+offsetField ;
+    string fields = "0000000"+opcode+regA+regB+offsetField ;
     return fields ;
 }
 string Jtype(string opcode,string regA,string regB){
-    string fields = opcode+regA+regB+"0000000000000000" ;
+    string fields = "0000000"+opcode+regA+regB+"0000000000000000" ;
     return fields ;
 }
 string Otype(string opcode){
-    string fields = opcode+"0000000000000000000000" ;
+    string fields = "0000000"+opcode+"0000000000000000000000" ;
     return fields ;
 }
