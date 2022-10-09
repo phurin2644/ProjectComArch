@@ -13,7 +13,7 @@ using namespace std;
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
 char const * DecimalToBin(char *);
-string Rtype(string,string,string,string);
+string Rtype(char *,char *,char *,char *);
 string Itype(string,string,string,string);
 string Jtype(string,string,string);
 string Otype(string);
@@ -27,8 +27,13 @@ int main(int argc, char *argv[])
     string s ;
     
     printf("binnum: %s\n",DecimalToBin("20"));
-    string s = Otype("010");
-    printf("code: %s/n",s.c_str());
+    char *opc = "010";
+    char *ra = "111";
+    char *rb = "110";
+    char *dr = "101";
+    s = Rtype(opc,ra,rb,dr);
+    printf("code: %s\n",s.c_str());
+
     if (argc != 3)
     {
         printf("error: usage: %s <assembly-code-file> <machine-code-file>\n",
@@ -68,7 +73,7 @@ int main(int argc, char *argv[])
     if (!strcmp(opcode, "add"))
     {
         /* do whatever you need to do for opcode "add" */
-        s = Rtype("000");
+//        s = Rtype("000");
     }else if (!strcmp(opcode, "nand"))
     {
         /* do whatever you need to do for opcode "nand" */
@@ -169,11 +174,19 @@ char const * DecimalToBin(char *demi){
 int BinToHex(){
 
 }
-string Rtype(string opcode,string regA,string regB,string destReg){
+string Rtype(char *opc,char *rA,char *rB,char *dR){
+	std::string opcode(opc);
+	std::string regA(rA);
+	std::string regB(rB);
+	std::string destReg(dR);
     string fields = opcode+regA+regB+"0000000000000"+destReg ;
     return fields ;
 }
-string Itype(string opcode,string regA,string regB,string offsetField){
+string Itype(char *opc,char *rA,string rB,string offsField){
+	std::string opcode(opc);
+	std::string regA(rA);
+	std::string regB(rB);
+	std::string offsetField(offsField);
     string fields = opcode+regA+regB+offsetField ;
     return fields ;
 }
