@@ -16,7 +16,7 @@ char const * DecimalToBin(char *);
 string Rtype(char *,char *,char *,char *);
 string Itype(char *,char *,char *,char *);
 string Jtype(char *,char *,char *);
-string Otype(string);
+string Otype(char *);
 
 int main(int argc, char *argv[])
 {
@@ -229,7 +229,8 @@ string Jtype(char *opc,char *rA,char *rB){
     string fields = "0000000"+opcode+regA+regB+"0000000000000000" ;
     return fields ;
 }
-string Otype(string opcode){
+string Otype(char *opc){
+	std::string opcode(opc);
     string fields = "0000000"+opcode+"0000000000000000000000" ;
     return fields ;
 }
