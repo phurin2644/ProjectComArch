@@ -33,6 +33,12 @@ int main(int argc, char *argv[])
     char *dr = "5";
     s = Rtype(opc,ra,rb,dr);
     printf("code: %s\n",s.c_str());
+    s = Itype(opc,ra,rb,dr);
+    printf("code: %s\n",s.c_str());
+    s = Jtype(opc,ra,rb);
+    printf("code: %s\n",s.c_str());
+    s = Otype(opc);
+    printf("code: %s\n",s.c_str());
 
     if (argc != 3)
     {
@@ -155,9 +161,7 @@ int isNumber(char *string)
 }
 
 char const * DecimalToBin(char *demi){
-	printf("Demical num is %d \n", demi);
 	int decimal = atoi(demi);
-	printf("Demical num is %d \n", decimal);
 	int binary = 0, remainder, product = 1;
 	while (decimal != 0) {
     remainder = decimal % 2;
@@ -193,10 +197,15 @@ string Rtype(char *opc,char *rA,char *rB,char *dR){
 }
 string Itype(char *opc,char *rA,char *rB,char *offsField){
 	std::string opcode(opc);
-	std::string regA(rA);
-	std::string regB(rB);
-	std::string offsetField(offsField);
-	int i = 0 ;
+	std::string regA(DecimalToBin(rA));
+	std::string regB(DecimalToBin(rB));
+	std::string offsetField(DecimalToBin(offsField));
+	while(regA.length()<3){
+		regA = "0"+regA ;
+	}
+	while(regB.length()<3){
+		regB = "0"+regB ;
+	}
 	while(offsetField.length()<16){
 		offsetField = "0"+offsetField ;
 	}
@@ -205,8 +214,14 @@ string Itype(char *opc,char *rA,char *rB,char *offsField){
 }
 string Jtype(char *opc,char *rA,char *rB){
 	std::string opcode(opc);
-	std::string regA(rA);
-	std::string regB(rB);
+	std::string regA(DecimalToBin(rA));
+	std::string regB(DecimalToBin(rB));
+	while(regA.length()<3){
+		regA = "0"+regA ;
+	}
+	while(regB.length()<3){
+		regB = "0"+regB ;
+	}
     string fields = "0000000"+opcode+regA+regB+"0000000000000000" ;
     return fields ;
 }
