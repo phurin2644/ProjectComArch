@@ -15,7 +15,7 @@ int isNumber(char *);
 char const * DecimalToBin(char *);
 string Rtype(char *,char *,char *,char *);
 string Itype(char *,char *,char *,char *);
-string Jtype(string,string,string);
+string Jtype(char *,char *,char *);
 string Otype(string);
 
 int main(int argc, char *argv[])
@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
     
     printf("binnum: %s\n",DecimalToBin("20"));
     char *opc = "010";
-    char *ra = "111";
-    char *rb = "010";
-    char *dr = "101";
-    s = Itype(opc,ra,rb,dr);
+    char *ra = "5";
+    char *rb = "5";
+    char *dr = "5";
+    s = Rtype(opc,ra,rb,dr);
     printf("code: %s\n",s.c_str());
 
     if (argc != 3)
@@ -176,9 +176,18 @@ int BinToHex(){
 }
 string Rtype(char *opc,char *rA,char *rB,char *dR){
 	std::string opcode(opc);
-	std::string regA(rA);
-	std::string regB(rB);
-	std::string destReg(dR);
+	std::string regA(DecimalToBin(rA));
+	std::string regB(DecimalToBin(rB));
+	std::string destReg(DecimalToBin(dR));
+	while(regA.length()<3){
+		regA = "0"+regA ;
+	}
+	while(regB.length()<3){
+		regB = "0"+regB ;
+	}
+	while(destReg.length()<3){
+		destReg = "0"+destReg ;
+	}
     string fields = "0000000"+opcode+regA+regB+"0000000000000"+destReg ;
     return fields ;
 }
@@ -194,7 +203,10 @@ string Itype(char *opc,char *rA,char *rB,char *offsField){
     string fields = "0000000"+opcode+regA+regB+offsetField ;
     return fields ;
 }
-string Jtype(string opcode,string regA,string regB){
+string Jtype(char *opc,char *rA,char *rB){
+	std::string opcode(opc);
+	std::string regA(rA);
+	std::string regB(rB);
     string fields = "0000000"+opcode+regA+regB+"0000000000000000" ;
     return fields ;
 }
