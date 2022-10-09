@@ -13,6 +13,7 @@ using namespace std;
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
 char const * DecimalToBin(char *);
+long long int BinToDeci(string );
 string Rtype(char *,char *,char *,char *);
 string Itype(char *,char *,char *,char *);
 string Jtype(char *,char *,char *);
@@ -27,12 +28,14 @@ int main(int argc, char *argv[])
     string s ;
     
     printf("binnum: %s\n",DecimalToBin("20"));
-    char *opc = "010";
-    char ra[] = "5";
-    char rb[] = "5";
-    char dr[] = "5";
+    char *opc = "000";
+    char ra[] = "1";
+    char rb[] = "2";
+    char dr[] = "1";
+    
     s = Rtype(opc,ra,rb,dr);
     printf("code: %s\n",s.c_str());
+    printf("code decimal: %d \n",BinToDeci(s));
     s = Itype(opc,ra,rb,dr);
     printf("code: %s\n",s.c_str());
     s = Jtype(opc,ra,rb);
@@ -179,8 +182,19 @@ char const * DecimalToBin(char *demi){
     char const *num_char = tmp.str().c_str();
 	return num_char ;
 }
-int BinToHex(){
 
+long long int BinToDeci(string n){
+	char *end; 
+	int j = 0;
+    while(n[j] == '0') {
+            ++j;
+    }
+    n.erase(0, j);  
+	printf("%s \n",n.c_str());   
+	int decimalNumber = 0;
+    int base = 1;
+    long long int temp = stoll(n, 0, 2);
+    return temp;
 }
 string Rtype(char *opc,char *rA,char *rB,char *dR){
 	std::string opcode(opc);
