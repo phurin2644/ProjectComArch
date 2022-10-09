@@ -76,26 +76,30 @@ int main(int argc, char *argv[])
 
     /* after doing a readAndParse, you may want to do the following to test the
         opcode */
-    if (!strcmp(opcode, "add"))
-    {
+    if (!strcmp(opcode, "add")){
         /* do whatever you need to do for opcode "add" */
-//        s = Rtype("000");
-    }else if (!strcmp(opcode, "nand"))
-    {
+        s = Rtype("000",arg0,arg1,arg2);
+    }else if (!strcmp(opcode, "nand")){
         /* do whatever you need to do for opcode "nand" */
-        int opc = 001 ;
-    }else if (!strcmp(opcode, "lw"))
-    {
-        /* do whatever you need to do for opcode "add" */
-        int opc = 010 ;
-    }else if (!strcmp(opcode, "sw"))
-    {
-        /* do whatever you need to do for opcode "add" */
-        int opc = 011 ;
-    }else if (!strcmp(opcode, "beq"))
-    {
-        /* do whatever you need to do for opcode "add" */
-        int opc = 100 ;
+        s = Rtype("001",arg0,arg1,arg2);
+    }else if (!strcmp(opcode, "lw")){
+        /* do whatever you need to do for opcode "lw" */
+        s = Itype("010",arg0,arg1,arg2);
+    }else if (!strcmp(opcode, "sw")){
+        /* do whatever you need to do for opcode "sw" */
+        s = Itype("011",arg0,arg1,arg2);
+    }else if (!strcmp(opcode, "beq")){
+        /* do whatever you need to do for opcode "beq" */
+        s = Itype("100",arg0,arg1,arg2);
+    }else if (!strcmp(opcode, "jalr")){
+        /* do whatever you need to do for opcode "beq" */
+        s = Jtype("101",arg0,arg1);
+    }else if (!strcmp(opcode, "halt")){
+        /* do whatever you need to do for opcode "beq" */
+        s = Otype("110");
+    }else if (!strcmp(opcode, "noop")){
+        /* do whatever you need to do for opcode "beq" */
+        s = Otype("111");
     }
 
     return (0);
