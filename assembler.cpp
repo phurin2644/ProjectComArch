@@ -12,11 +12,11 @@ using namespace std;
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
-char const * DecimalToBin(char *);
-long long int BinToDeci(string );
-string Rtype(char *,char *,char *,char *);
-string Itype(char *,char *,char *,char *);
-string Jtype(char *,char *,char *);
+char const *DecimalToBin(char *);
+long long int BinToDeci(string);
+string Rtype(char *, char *, char *, char *);
+string Itype(char *, char *, char *, char *);
+string Jtype(char *, char *, char *);
 string Otype(char *);
 
 int main(int argc, char *argv[])
@@ -25,23 +25,22 @@ int main(int argc, char *argv[])
     FILE *inFilePtr, *outFilePtr;
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
-    string s ;
-    
-    printf("binnum: %s\n",DecimalToBin("20"));
-    char *opc = "000";
-    char ra[] = "1";
-    char rb[] = "2";
-    char dr[] = "1";
-    
-    s = Rtype(opc,ra,rb,dr);
-    printf("code: %s\n",s.c_str());
-    printf("code decimal: %d \n",BinToDeci(s));
-    s = Itype(opc,ra,rb,dr);
-    printf("code: %s\n",s.c_str());
-    s = Jtype(opc,ra,rb);
-    printf("code: %s\n",s.c_str());
-    s = Otype(opc);
-    printf("code: %s\n",s.c_str());
+    string s;
+
+    // printf("binnum: %s\n",DecimalToBin("20"));
+    // char *opc = "000";
+    // char ra[] = "1";
+    // char rb[] = "2";
+    // char dr[] = "1";
+    // s = Rtype(opc, ra, rb, dr);
+    // printf("code: %s\n", s.c_str());
+    // printf("code decimal: %d \n", BinToDeci(s));
+    // s = Itype(opc,ra,rb,dr);
+    // printf("code: %s\n",s.c_str());
+    // s = Jtype(opc,ra,rb);
+    // printf("code: %s\n",s.c_str());
+    // s = Otype(opc);
+    // printf("code: %s\n",s.c_str());
 
     if (argc != 3)
     {
@@ -68,42 +67,70 @@ int main(int argc, char *argv[])
 
     /* here is an example for how to use readAndParse to read a line from
         inFilePtr */
-    if (!readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
+    while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
-        /* reached end of file */
+        /* code */
+        if (!strcmp(opcode, "add"))
+        {
+            /* do whatever you need to do for opcode "add" */
+            s = Rtype("000", arg2, arg1, arg0);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "nand"))
+        {
+            /* do whatever you need to do for opcode "nand" */
+            s = Rtype("001", arg2, arg1, arg0);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "lw"))
+        {
+            /* do whatever you need to do for opcode "lw" */
+            s = Itype("010", arg0, arg1, arg2);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "sw"))
+        {
+            /* do whatever you need to do for opcode "sw" */
+            s = Itype("011", arg0, arg1, arg2);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "beq"))
+        {
+            /* do whatever you need to do for opcode "beq" */
+            s = Itype("100", arg0, arg1, arg2);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "jalr"))
+        {
+            /* do whatever you need to do for opcode "beq" */
+            s = Jtype("101", arg0, arg1);
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "halt"))
+        {
+            /* do whatever you need to do for opcode "beq" */
+            s = Otype("110");
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
+        else if (!strcmp(opcode, "noop"))
+        {
+            /* do whatever you need to do for opcode "beq" */
+            s = Otype("111");
+            printf("code decimal: %d \n", BinToDeci(s));
+        }
     }
 
+    // if (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
+    // {
+    //     /* reached end of file */
+
+    // }
     /* this is how to rewind the file ptr so that you start reading from the
         beginning of the file */
     rewind(inFilePtr);
 
     /* after doing a readAndParse, you may want to do the following to test the
         opcode */
-    if (!strcmp(opcode, "add")){
-        /* do whatever you need to do for opcode "add" */
-        s = Rtype("000",arg0,arg1,arg2);
-    }else if (!strcmp(opcode, "nand")){
-        /* do whatever you need to do for opcode "nand" */
-        s = Rtype("001",arg0,arg1,arg2);
-    }else if (!strcmp(opcode, "lw")){
-        /* do whatever you need to do for opcode "lw" */
-        s = Itype("010",arg0,arg1,arg2);
-    }else if (!strcmp(opcode, "sw")){
-        /* do whatever you need to do for opcode "sw" */
-        s = Itype("011",arg0,arg1,arg2);
-    }else if (!strcmp(opcode, "beq")){
-        /* do whatever you need to do for opcode "beq" */
-        s = Itype("100",arg0,arg1,arg2);
-    }else if (!strcmp(opcode, "jalr")){
-        /* do whatever you need to do for opcode "beq" */
-        s = Jtype("101",arg0,arg1);
-    }else if (!strcmp(opcode, "halt")){
-        /* do whatever you need to do for opcode "beq" */
-        s = Otype("110");
-    }else if (!strcmp(opcode, "noop")){
-        /* do whatever you need to do for opcode "beq" */
-        s = Otype("111");
-    }
 
     return (0);
 }
@@ -167,84 +194,99 @@ int isNumber(char *string)
     return ((sscanf(string, "%d", &i)) == 1);
 }
 
-char const * DecimalToBin(char *demi){
-	int decimal = atoi(demi);
-	int binary = 0, remainder, product = 1;
-	while (decimal != 0) {
-    remainder = decimal % 2;
-    binary = binary + (remainder * product);
-    decimal = decimal / 2;
-    product *= 10;
-  }
-  std::stringstream tmp;
+char const *DecimalToBin(char *demi)
+{
+    int decimal = atoi(demi);
+    int binary = 0, remainder, product = 1;
+    while (decimal != 0)
+    {
+        remainder = decimal % 2;
+        binary = binary + (remainder * product);
+        decimal = decimal / 2;
+        product *= 10;
+    }
+    std::stringstream tmp;
     tmp << binary;
 
     char const *num_char = tmp.str().c_str();
-	return num_char ;
+    return num_char;
 }
 
-long long int BinToDeci(string n){
-	char *end; 
-	int j = 0;
-    while(n[j] == '0') {
-            ++j;
+long long int BinToDeci(string n)
+{
+    char *end;
+    int j = 0;
+    while (n[j] == '0')
+    {
+        ++j;
     }
-    n.erase(0, j);  
-	printf("%s \n",n.c_str());   
-	int decimalNumber = 0;
+    n.erase(0, j);
+    int decimalNumber = 0;
     int base = 1;
     long long int temp = stoll(n, 0, 2);
     return temp;
 }
-string Rtype(char *opc,char *rA,char *rB,char *dR){
-	std::string opcode(opc);
-	std::string regA(DecimalToBin(rA));
-	std::string regB(DecimalToBin(rB));
-	std::string destReg(DecimalToBin(dR));
-	while(regA.length()<3){
-		regA = "0"+regA ;
-	}
-	while(regB.length()<3){
-		regB = "0"+regB ;
-	}
-	while(destReg.length()<3){
-		destReg = "0"+destReg ;
-	}
-    string fields = "0000000"+opcode+regA+regB+"0000000000000"+destReg ;
-    return fields ;
+string Rtype(char *opc, char *rA, char *rB, char *dR)
+{
+    std::string opcode(opc);
+    std::string regA(DecimalToBin(rA));
+    std::string regB(DecimalToBin(rB));
+    std::string destReg(DecimalToBin(dR));
+    while (regA.length() < 3)
+    {
+        regA = "0" + regA;
+    }
+    while (regB.length() < 3)
+    {
+        regB = "0" + regB;
+    }
+    while (destReg.length() < 3)
+    {
+        destReg = "0" + destReg;
+    }
+    string fields = "0000000" + opcode + regA + regB + "0000000000000" + destReg;
+    return fields;
 }
-string Itype(char *opc,char *rA,char *rB,char *offsField){
-	std::string opcode(opc);
-	std::string regA(DecimalToBin(rA));
-	std::string regB(DecimalToBin(rB));
-	std::string offsetField(DecimalToBin(offsField));
-	while(regA.length()<3){
-		regA = "0"+regA ;
-	}
-	while(regB.length()<3){
-		regB = "0"+regB ;
-	}
-	while(offsetField.length()<16){
-		offsetField = "0"+offsetField ;
-	}
-    string fields = "0000000"+opcode+regA+regB+offsetField ;
-    return fields ;
+string Itype(char *opc, char *rA, char *rB, char *offsField)
+{
+    std::string opcode(opc);
+    std::string regA(DecimalToBin(rA));
+    std::string regB(DecimalToBin(rB));
+    std::string offsetField(DecimalToBin(offsField));
+    while (regA.length() < 3)
+    {
+        regA = "0" + regA;
+    }
+    while (regB.length() < 3)
+    {
+        regB = "0" + regB;
+    }
+    while (offsetField.length() < 16)
+    {
+        offsetField = "0" + offsetField;
+    }
+    string fields = "0000000" + opcode + regA + regB + offsetField;
+    return fields;
 }
-string Jtype(char *opc,char *rA,char *rB){
-	std::string opcode(opc);
-	std::string regA(DecimalToBin(rA));
-	std::string regB(DecimalToBin(rB));
-	while(regA.length()<3){
-		regA = "0"+regA ;
-	}
-	while(regB.length()<3){
-		regB = "0"+regB ;
-	}
-    string fields = "0000000"+opcode+regA+regB+"0000000000000000" ;
-    return fields ;
+string Jtype(char *opc, char *rA, char *rB)
+{
+    std::string opcode(opc);
+    std::string regA(DecimalToBin(rA));
+    std::string regB(DecimalToBin(rB));
+    while (regA.length() < 3)
+    {
+        regA = "0" + regA;
+    }
+    while (regB.length() < 3)
+    {
+        regB = "0" + regB;
+    }
+    string fields = "0000000" + opcode + regA + regB + "0000000000000000";
+    return fields;
 }
-string Otype(char *opc){
-	std::string opcode(opc);
-    string fields = "0000000"+opcode+"0000000000000000000000" ;
-    return fields ;
+string Otype(char *opc)
+{
+    std::string opcode(opc);
+    string fields = "0000000" + opcode + "0000000000000000000000";
+    return fields;
 }
