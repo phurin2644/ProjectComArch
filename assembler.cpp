@@ -1,6 +1,9 @@
 /* Assembler code fragment */
 
 #include <iostream>
+#include <bitset>
+#include <cstddef>
+#include <cassert>
 #include <cstdlib>
 #include <cstdio>
 #include <string>
@@ -195,10 +198,15 @@ int isNumber(char *string)
     int i;
     return ((sscanf(string, "%d", &i)) == 1);
 }
+bool isNegative(int n){
+    return n < 0 ;
+}
 
-char const *DecimalToBin(char *demi)
+char const *DecimalToBin(char *demi , int index)
 {
     int decimal = atoi(demi);
+    bool isNegative = isNegative(decimal);
+    if(isNegative == 1){decimal = abs(decimal)+1;}
     int binary = 0, remainder, product = 1;
     while (decimal != 0)
     {
