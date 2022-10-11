@@ -15,7 +15,7 @@ using namespace std;
 
 int readAndParse(FILE *, char *, char *, char *, char *, char *);
 int isNumber(char *);
-char const *DecimalToBin(char *);
+string DecimalToBin(char *,int);
 long long int BinToDeci(string);
 long long int Rtype(char *, char *, char *, char *);
 long long int Itype(char *, char *, char *, char *);
@@ -202,11 +202,11 @@ bool isNegative(int n){
     return n < 0 ;
 }
 
-char const *DecimalToBin(char *demi , int index)
+string DecimalToBin(char *demi , int index)
 {
     int decimal = atoi(demi);
-    bool isNegative = isNegative(decimal);
-    if(isNegative == 1){decimal = abs(decimal)+1;}
+    bool isN = isNegative(decimal);
+    if(isN){decimal = abs(decimal)+1;}
     int binary = 0, remainder, product = 1;
     while (decimal != 0)
     {
@@ -218,7 +218,15 @@ char const *DecimalToBin(char *demi , int index)
     std::stringstream tmp;
     tmp << binary;
 
-    char const *num_char = tmp.str().c_str();
+    string num_char = tmp.str();
+    while (num_char.length() < index)
+    {
+        if(!isN){
+            num_char = "0" + num_char ;
+        }else{ 
+            num_char = "1" + num_char ;
+        }
+    }
     return num_char;
 }
 
@@ -240,58 +248,58 @@ long long int BinToDeci(string n)
 long long int Rtype(char *opc, char *rA, char *rB, char *dR)
 {
     std::string opcode(opc);
-    std::string regA(DecimalToBin(rA));
-    std::string regB(DecimalToBin(rB));
-    std::string destReg(DecimalToBin(dR));
-    while (regA.length() < 3)
-    {
-        regA = "0" + regA;
-    }
-    while (regB.length() < 3)
-    {
-        regB = "0" + regB;
-    }
-    while (destReg.length() < 3)
-    {
-        destReg = "0" + destReg;
-    }
+    std::string regA(DecimalToBin(rA,3));
+    std::string regB(DecimalToBin(rB,3));
+    std::string destReg(DecimalToBin(dR,3));
+    // while (regA.length() < 3)
+    // {
+    //     regA = "0" + regA;
+    // }
+    // while (regB.length() < 3)
+    // {
+    //     regB = "0" + regB;
+    // }
+    // while (destReg.length() < 3)
+    // {
+    //     destReg = "0" + destReg;
+    // }
     string fields = "0000000" + opcode + regA + regB + "0000000000000" + destReg;
     return BinToDeci(fields);
 }
 long long int Itype(char *opc, char *rA, char *rB, char *offsField)
 {
     std::string opcode(opc);
-    std::string regA(DecimalToBin(rA));
-    std::string regB(DecimalToBin(rB));
-    std::string offsetField(DecimalToBin(offsField));
-    while (regA.length() < 3)
-    {
-        regA = "0" + regA;
-    }
-    while (regB.length() < 3)
-    {
-        regB = "0" + regB;
-    }
-    while (offsetField.length() < 16)
-    {
-        offsetField = "0" + offsetField;
-    }
+    std::string regA(DecimalToBin(rA,3));
+    std::string regB(DecimalToBin(rB,3));
+    std::string offsetField(DecimalToBin(offsField,16));
+    // while (regA.length() < 3)
+    // {
+    //     regA = "0" + regA;
+    // }
+    // while (regB.length() < 3)
+    // {
+    //     regB = "0" + regB;
+    // }
+    // while (offsetField.length() < 16)
+    // {
+    //     offsetField = "0" + offsetField;
+    // }
     string fields = "0000000" + opcode + regA + regB + offsetField;
     return BinToDeci(fields);
 }
 long long int Jtype(char *opc, char *rA, char *rB)
 {
     std::string opcode(opc);
-    std::string regA(DecimalToBin(rA));
-    std::string regB(DecimalToBin(rB));
-    while (regA.length() < 3)
-    {
-        regA = "0" + regA;
-    }
-    while (regB.length() < 3)
-    {
-        regB = "0" + regB;
-    }
+    std::string regA(DecimalToBin(rA,3));
+    std::string regB(DecimalToBin(rB,3));
+    // while (regA.length() < 3)
+    // {
+    //     regA = "0" + regA;
+    // }
+    // while (regB.length() < 3)
+    // {
+    //     regB = "0" + regB;
+    // }
     string fields = "0000000" + opcode + regA + regB + "0000000000000000";
     return BinToDeci(fields);
 }
