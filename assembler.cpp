@@ -9,6 +9,7 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+#include <vector>
 using namespace std;
 
 #define MAXLINELENGTH 1000
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     long long int s;
-    string addressLabel[];
+    std::vector<std::string> addressLabel;
 
     // printf("binnum: %s\n",DecimalToBin("20"));
     // char *opc = "000";
@@ -72,20 +73,16 @@ int main(int argc, char *argv[])
         printf("error in opening %s\n", outFileString);
         exit(1);
     }
-    cout << "love" ;
-    int i ;
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
         /* code */
-        cout << "love" ;
-            addressLabel[i] = label ;
-            i++ ;
+        addressLabel.push_back(label);
     }
     // rewind(inFilePtr);
     rewind(inFilePtr);
 
 
-    // for (int n = 0; n < addressLabel->length; n++){cout << addressLabel[n] << "\n";}
+    for (int n = 0; n < addressLabel.size(); n++){cout << n << " : "<< addressLabel[n] << "\n";}
 
 
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
