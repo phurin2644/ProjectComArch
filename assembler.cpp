@@ -76,10 +76,10 @@ int main(int argc, char *argv[])
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
         /* code */
-        if (std::find(addressLabel.begin(), addressLabel.end(), label) != addressLabel.end()){
-        /* same label */
-        printf("error: redundant label\n");
-        exit(1);
+        if (std::find(addressLabel.begin(), addressLabel.end(), label) != addressLabel.end()&&strcmp(label, "")){
+        /* same label */ 
+                printf("error: already used %s as label\n",label);
+                exit(1);
         }
         addressLabel.push_back(label);
     }
@@ -139,10 +139,14 @@ int main(int argc, char *argv[])
         {
             /* do whatever you need to do for opcode "beq" */
             s = Otype("111");
-            
+        
         }
         else if(!strcmp(opcode, ".fill")){
             s = filltype(arg0,addressLabel);
+        }
+        else{
+            printf("error: no opcode\n",opcode);
+            exit(1);
         }
         // printf("code decimal: %d \n", s);
         fprintf(outFilePtr, "%d \n",s) ;
