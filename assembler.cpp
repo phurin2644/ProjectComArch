@@ -23,6 +23,7 @@ long long int Rtype(char *, char *, char *, char *);
 long long int Itype(char *, char *, char *, char *);
 long long int Jtype(char *, char *, char *);
 long long int Otype(char *);
+long long int filltype(char *);
 
 int main(int argc, char *argv[])
 {
@@ -123,6 +124,9 @@ int main(int argc, char *argv[])
             /* do whatever you need to do for opcode "beq" */
             s = Otype("111");
             
+        }
+        else if(!strcmp(opcode, ".fill")){
+            s = filltype(arg0);
         }
         // printf("code decimal: %d \n", s);
         fprintf(outFilePtr, "%d \n",s) ;
@@ -292,4 +296,10 @@ long long int Otype(char *opc)
     std::string opcode(opc);
     string fields = "0000000" + opcode + "0000000000000000000000";
     return BinToDeci(fields);
+}
+long long int filltype(char *num)
+{
+    long long int x;
+    sscanf(num, "%d", &x);
+    return x;
 }
