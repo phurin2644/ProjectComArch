@@ -36,22 +36,6 @@ int main(int argc, char *argv[])
     std::vector<string> addressLabel;
     std::vector<long long int> machinecode ;
 
-    // printf("binnum: %s\n",DecimalToBin("20"));
-    // char *opc = "000";
-    // char ra[] = "1";
-    // char rb[] = "2";
-    // char dr[] = "1";
-    // s = Rtype(opc, ra, rb, dr);
-    // printf("code: %s\n", s.c_str());
-    // printf("code decimal: %d \n", BinToDeci(s));
-    // s = Itype(opc,ra,rb,dr);
-    // printf("code: %s\n",s.c_str());
-    // s = Jtype(opc,ra,rb);
-    // printf("code: %s\n",s.c_str());
-    // s = Otype(opc);
-    // printf("code: %s\n",s.c_str());
-    // cout << invertBits(101);
-
     if (argc != 3)
     {
         printf("error: usage: %s <assembly-code-file> <machine-code-file>\n",
@@ -151,26 +135,14 @@ int main(int argc, char *argv[])
             printf("error: no %s opcode\n",opcode);
             exit(1);
         }
-        // printf("code decimal: %d \n", s);
         machinecode.push_back(s);
         ind++ ;
     }
 
+    /* print on output*/
     for (int n = 0; n < machinecode.size(); n++){
         fprintf(outFilePtr, "%d \n",machinecode[n]) ;
     }
-
-    // if (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
-    // {
-    //     /* reached end of file */
-
-    // }
-    /* this is how to rewind the file ptr so that you start reading from the
-        beginning of the file */
-    rewind(inFilePtr);
-
-    /* after doing a readAndParse, you may want to do the following to test the
-        opcode */
 
     return (0);
 }
@@ -323,6 +295,11 @@ long long int Itype(char *opc, char *rA, char *rB, char *offsField,vector<string
     std::string regA(DecimalToBin(rA,3));
     std::string regB(DecimalToBin(rB,3));
     std::string offsetField(DecimalToBin(offsField,16));
+    /*check if offsetField more than 16 bits*/
+    if(offsetField.length()>16){
+        printf("error: this offsetField too long\n");
+        exit(1);
+    }
     string fields = "0000000" + opcode + regA + regB + offsetField;
     return BinToDeci(fields);
 }
