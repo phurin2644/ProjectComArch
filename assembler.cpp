@@ -24,7 +24,7 @@ long long int Rtype(char *, char *, char *, char *);
 long long int Itype(char *, char *, char *, char *);
 long long int Jtype(char *, char *, char *);
 long long int Otype(char *);
-long long int filltype(char *);
+long long int filltype(char *,vector<string>);
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     long long int s;
-    std::vector<std::string> addressLabel;
+    std::vector<string> addressLabel;
 
     // printf("binnum: %s\n",DecimalToBin("20"));
     // char *opc = "000";
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
             
         }
         else if(!strcmp(opcode, ".fill")){
-            s = filltype(arg0);
+            s = filltype(arg0,addressLabel);
         }
         // printf("code decimal: %d \n", s);
         fprintf(outFilePtr, "%d \n",s) ;
@@ -305,9 +305,16 @@ long long int Otype(char *opc)
     string fields = "0000000" + opcode + "0000000000000000000000";
     return BinToDeci(fields);
 }
-long long int filltype(char *num)
+long long int filltype(char *num,vector<string> adr)
 {
     long long int x;
-    sscanf(num, "%d", &x);
+    if(isNumber(num)){
+        sscanf(num, "%d", &x);
+    }else{
+        for (int n = 0; n < adr.size(); n++){
+            if(!strcmp(adr[n].c_str(), num))
+            x = n ;
+        }
+    }
     return x;
 }
