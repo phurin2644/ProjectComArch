@@ -72,8 +72,6 @@ int main(int argc, char *argv[])
     rewind(inFilePtr);
 
 
-    for (int n = 0; n < addressLabel.size(); n++){cout << n << " : "<< addressLabel[n] << "\n";}
-
     int ind = 0;
 
 
