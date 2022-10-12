@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
     char label[MAXLINELENGTH], opcode[MAXLINELENGTH], arg0[MAXLINELENGTH],
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     long long int s;
+    string addressLabel[];
 
     // printf("binnum: %s\n",DecimalToBin("20"));
     // char *opc = "000";
@@ -71,9 +72,22 @@ int main(int argc, char *argv[])
         printf("error in opening %s\n", outFileString);
         exit(1);
     }
+    cout << "love" ;
+    int i ;
+    while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
+    {
+        /* code */
+        cout << "love" ;
+            addressLabel[i] = label ;
+            i++ ;
+    }
+    // rewind(inFilePtr);
+    rewind(inFilePtr);
 
-    /* here is an example for how to use readAndParse to read a line from
-        inFilePtr */
+
+    // for (int n = 0; n < addressLabel->length; n++){cout << addressLabel[n] << "\n";}
+
+
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
         /* code */
@@ -198,7 +212,6 @@ int readAndParse(FILE *inFilePtr, char *label, char *opcode, char *arg0,
            opcode, arg0, arg1, arg2);
     return (1);
 }
-
 int isNumber(char *string)
 {
     /* return 1 if string is a number */
@@ -218,7 +231,6 @@ string invertBits(int num)
  
     // Inverting the bits one by one
    b.flip();
-  
     return b.to_string() ;
 }
 string DecimalToBin(char *demi , int index)
@@ -259,7 +271,6 @@ long long int BinToDeci(string n)
         ++j;
     }
     n.erase(0, j);
-    cout << n <<"\n" ;
     int decimalNumber = 0;
     int base = 1;
     long long int temp = stoll(n, 0, 2);
