@@ -76,6 +76,11 @@ int main(int argc, char *argv[])
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
         /* code */
+        if (std::find(addressLabel.begin(), addressLabel.end(), label) != addressLabel.end()){
+        /* same label */
+        printf("error: redundant label\n");
+        exit(1);
+        }
         addressLabel.push_back(label);
     }
     // rewind(inFilePtr);
