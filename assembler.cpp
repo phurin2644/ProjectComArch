@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
         arg1[MAXLINELENGTH], arg2[MAXLINELENGTH];
     long long int s;
     std::vector<string> addressLabel;
+    std::vector<long long int> machinecode ;
 
     // printf("binnum: %s\n",DecimalToBin("20"));
     // char *opc = "000";
@@ -151,8 +152,12 @@ int main(int argc, char *argv[])
             exit(1);
         }
         // printf("code decimal: %d \n", s);
-        fprintf(outFilePtr, "%d \n",s) ;
+        machinecode.push_back(s);
         ind++ ;
+    }
+
+    for (int n = 0; n < machinecode.size(); n++){
+        fprintf(outFilePtr, "%d \n",machinecode[n]) ;
     }
 
     // if (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
@@ -299,9 +304,15 @@ long long int Itype(char *opc, char *rA, char *rB, char *offsField,vector<string
     int x ;
     if(!isNumber(offsField)){
         for (int n = 0; n < adr.size(); n++){
-            if(!strcmp(adr[n].c_str(), offsField))
-            x = n ;
+            if(!strcmp(adr[n].c_str(), offsField)){
+                x = n ;
+                break;
+            }
         }
+        if(x==NULL){
+            printf("error: no %s label in this program\n",offsField);
+            exit(1);
+        } 
         if(!strcmp(opc, "100")){
             x = x-(ind+1) ;
         }
@@ -339,6 +350,10 @@ long long int filltype(char *num,vector<string> adr)
             if(!strcmp(adr[n].c_str(), num))
             x = n ;
         }
+        if(x==NULL){
+            printf("error: no %s label in this program\n",num);
+            exit(1);
+        } 
     }
     return x;
 }
