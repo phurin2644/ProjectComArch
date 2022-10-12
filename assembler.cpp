@@ -21,7 +21,7 @@ string invertBits(int);
 string DecimalToBin(char *,int);
 long long int BinToDeci(string);
 long long int Rtype(char *, char *, char *, char *);
-long long int Itype(char *, char *, char *, char *);
+long long int Itype(char *, char *, char *, char *,vector<string>);
 long long int Jtype(char *, char *, char *);
 long long int Otype(char *);
 long long int filltype(char *,vector<string>);
@@ -103,19 +103,19 @@ int main(int argc, char *argv[])
         else if (!strcmp(opcode, "lw"))
         {
             /* do whatever you need to do for opcode "lw" */
-            s = Itype("010", arg0, arg1, arg2);
+            s = Itype("010", arg0, arg1, arg2,addressLabel);
            
         }
         else if (!strcmp(opcode, "sw"))
         {
             /* do whatever you need to do for opcode "sw" */
-            s = Itype("011", arg0, arg1, arg2);
+            s = Itype("011", arg0, arg1, arg2,addressLabel);
          
         }
         else if (!strcmp(opcode, "beq"))
         {
             /* do whatever you need to do for opcode "beq" */
-            s = Itype("100", arg0, arg1, arg2);
+            s = Itype("100", arg0, arg1, arg2,addressLabel);
            
         }
         else if (!strcmp(opcode, "jalr"))
@@ -282,8 +282,17 @@ long long int Rtype(char *opc, char *rA, char *rB, char *dR)
     string fields = "0000000" + opcode + regA + regB + "0000000000000" + destReg;
     return BinToDeci(fields);
 }
-long long int Itype(char *opc, char *rA, char *rB, char *offsField)
+long long int Itype(char *opc, char *rA, char *rB, char *offsField,vector<string> adr)
 {
+    int x ;
+    if(!isNumber(offsField)){
+        for (int n = 0; n < adr.size(); n++){
+            if(!strcmp(adr[n].c_str(), offsField))
+            x = n ;
+        }
+    }
+    std::string tmp = std::to_string(x);
+    strcpy(offsField, tmp.c_str());
     std::string opcode(opc);
     std::string regA(DecimalToBin(rA,3));
     std::string regB(DecimalToBin(rB,3));
