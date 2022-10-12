@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
             s = filltype(arg0,addressLabel);
         }
         else{
-            printf("error: no opcode\n",opcode);
+            printf("error: no %s opcode\n",opcode);
             exit(1);
         }
         // printf("code decimal: %d \n", s);
