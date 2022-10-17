@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
         printf("error in opening %s\n", outFileString);
         exit(1);
     }
+    /*save label address*/
     while (readAndParse(inFilePtr, label, opcode, arg0, arg1, arg2))
     {
         /* code */
@@ -80,56 +81,58 @@ int main(int argc, char *argv[])
         /* code */
         if (!strcmp(opcode, "add"))
         {
-            /* do whatever you need to do for opcode "add" */
+            /* turn opcode "add"  to machine code*/
             s = Rtype("000", arg2, arg1, arg0);
 
         }
         else if (!strcmp(opcode, "nand"))
         {
-            /* do whatever you need to do for opcode "nand" */
+            /* turn opcode "nand" to machine code */
             s = Rtype("001", arg2, arg1, arg0);
            
         }
         else if (!strcmp(opcode, "lw"))
         {
-            /* do whatever you need to do for opcode "lw" */
+            /* turn opcode "lw"  to machine code*/
             s = Itype("010", arg0, arg1, arg2,addressLabel,ind);
            
         }
         else if (!strcmp(opcode, "sw"))
         {
-            /* do whatever you need to do for opcode "sw" */
+            /* turn opcode "sw"  to machine code*/
             s = Itype("011", arg0, arg1, arg2,addressLabel,ind);
          
         }
         else if (!strcmp(opcode, "beq"))
         {
-            /* do whatever you need to do for opcode "beq" */
+            /* turn opcode "beq"  to machine code*/
             s = Itype("100", arg0, arg1, arg2,addressLabel,ind);
            
         }
         else if (!strcmp(opcode, "jalr"))
         {
-            /* do whatever you need to do for opcode "beq" */
+            /* turn opcode "jalr"  to machine code*/
             s = Jtype("101", arg0, arg1);
           
         }
         else if (!strcmp(opcode, "halt"))
         {
-            /* do whatever you need to do for opcode "beq" */
+            /* turn opcode "halt"  to machine code*/
             s = Otype("110");
            
         }
         else if (!strcmp(opcode, "noop"))
         {
-            /* do whatever you need to do for opcode "beq" */
+            /* turn opcode "noop"  to machine code*/
             s = Otype("111");
         
         }
         else if(!strcmp(opcode, ".fill")){
+            /* turn opcode ".fill"  to machine code*/
             s = filltype(arg0,addressLabel);
         }
         else{
+            /*strange opcode*/
             printf("error: no %s opcode\n",opcode);
             exit(1);
         }
@@ -137,7 +140,7 @@ int main(int argc, char *argv[])
         ind++ ;
     }
 
-    /* print on output*/
+    /* print on output file*/
     for (int n = 0; n < machinecode.size(); n++){
         fprintf(outFilePtr, "%d \n",machinecode[n]) ;
     }
@@ -196,16 +199,18 @@ int readAndParse(FILE *inFilePtr, char *label, char *opcode, char *arg0,
            opcode, arg0, arg1, arg2);
     return (1);
 }
+/*check is Number*/
 int isNumber(char *string)
 {
     /* return 1 if string is a number */
     int i;
     return ((sscanf(string, "%d", &i)) == 1);
 }
+/*check is Negative number*/
 bool isNegative(int n){
     return n < 0 ;
 }
-
+/*flip bit*/
 string invertBits(int num)
 {
     // calculating number of bits
@@ -231,10 +236,12 @@ string DecimalToBin(char *demi , int index)
         product *= 10;
     }
     std::stringstream tmp;
+    /*check if it's negtive*/
     if(!isN){tmp << binary;
     }else{tmp << invertBits(binary);}
 
     string num_char = tmp.str();
+    /*เติมให้ครบ*/
     while (num_char.length() < index)
     {
         if(!isN){
@@ -273,6 +280,7 @@ long long int Itype(char *opc, char *rA, char *rB, char *offsField,vector<string
 {
     int x ;
     if(!isNumber(offsField)){
+        /*คำนวนหาadressของlabel*/
         for (int n = 0; n < adr.size(); n++){
             if(!strcmp(adr[n].c_str(), offsField)){
                 x = n ;
