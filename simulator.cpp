@@ -63,18 +63,17 @@ int main(int argc, char *argv[])
         state.reg[i] = 0;
     }
 
-    int j = 0;
     bool halt = false;
+    int count = 0;
 
     // simulation
-    while (!halt)
+    while (!halt && count < 65536)
     {
-        printState(&state);
+        //printState(&state);
 
         // pre-simulation
         int *curr_inst = decimalToBinary(state.mem[state.pc]);
         int opcode = curr_inst[24] * 100 + curr_inst[23] * 10 + curr_inst[22];
-        cout << opcode <<endl;
 
         int regA = binaryToDecimal(curr_inst[19] + curr_inst[20] * 10 + curr_inst[21] * 100); // bit 21-19
         int regB = binaryToDecimal(curr_inst[16] + curr_inst[17] * 10 + curr_inst[18] * 100); // bit 18-16
@@ -128,9 +127,13 @@ int main(int argc, char *argv[])
             halt = true;
         }
 
+        count++;
         state.pc++;
         state.reg[0] = 0;
     }
+    printf("machine halted\n");
+    printf("total of %d instructions executed\n",count);
+    printf("final state of machine:\n");
     printState(&state);
 
     return (0);
