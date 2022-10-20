@@ -1,7 +1,7 @@
 lw		0 	1 mcand
 lw		0 	2 mplier
 lw		0 	3 subAdr	prepare to call sub4n. $2=sub4n
-jalr	2	4			call sub4n; $4=return address; $3=answer
+jalr	3	4			call sub4n; $4=return address; $3=answer
 halt
 
 multiply:
