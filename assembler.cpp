@@ -69,9 +69,10 @@ int main(int argc, char *argv[])
         }
         addressLabel.push_back(label);
     }
+
+
     // rewind(inFilePtr);
     rewind(inFilePtr);
-
 
     int ind = 0;
 
@@ -112,7 +113,7 @@ int main(int argc, char *argv[])
         else if (!strcmp(opcode, "jalr"))
         {
             /* turn opcode "jalr"  to machine code*/
-            s = Jtype("101", arg0, arg1);
+            s = Jtype("101", arg1, arg0);
           
         }
         else if (!strcmp(opcode, "halt"))
