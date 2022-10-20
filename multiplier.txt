@@ -6,8 +6,8 @@ halt
 
 multiply:
 lw		0	5 pos1		$5 = 1
-sw		7	4 stack
-add     7   5 7
+sw 	7	4 stack
+add     7   5  7
 sw		7	1 stack
 add     7   5 7
 
