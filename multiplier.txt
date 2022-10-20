@@ -17,7 +17,8 @@ sw      0   5 _0x8000
 
 while_loop	beq     4   5   end_while 
 
-	and 	6	2  4
+	nand 	6	2  4
+	nand    6	6  6
 	sw  	0   5  zero
     beq 	6   5  end_if
     add 	3 3 1
