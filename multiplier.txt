@@ -1,0 +1,44 @@
+lw		0 	1 mcand
+lw		0 	2 mplier
+lw		0 	3 subAdr	prepare to call sub4n. $2=sub4n
+jalr	2	4			call sub4n; $4=return address; $3=answer
+halt
+
+multiply:
+lw		0	5 pos1		$5 = 1
+sw		7	4 stack
+add     7   5 7
+sw		7	1 stack
+add     7   5 7
+
+sw		0	3 zero		return value
+sw		0	4 pos1		1 bit
+sw      0   5 _0x8000
+
+while_loop	beq     4   5   end_while 
+
+	and 	6	2  4
+	sw  	0   5  zero
+    beq 	6   5  end_if
+    add 	3 3 1
+end_if		add 	1 	1   1 shift left mcand
+    add 	4   4  4 		  shift right 1bit    
+	sw  	0   5 _0x8000
+    beq 	5   5 while_loop
+end_while:
+
+lw		0	5 neg1       $2 = -1
+add		7	5 7          decrement stack pointer
+lw		7	1 stack      recover original $1
+add		7	5 7          decrement stack pointer
+lw		7	4 stack      recover original return address
+jalr	4	2            return.  $2 is not restored.
+
+pos1	.fill	1
+neg1	.fill	-1
+zero	.fill	0
+_0x8000 .fill   0x8000
+subAdr	.fill	Multiply
+mcand	.fill	2
+mplier	.fill	4
+stack	.fill	0 
